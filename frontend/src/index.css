@@ -1,0 +1,311 @@
+
+@import "tailwindcss";
+
+/* =========================================
+   KIRANAMITRA - GLOBAL DESIGN SYSTEM
+========================================= */
+
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  color: #172033;
+  background: #f8fafc;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --km-primary: #2563eb;
+  --km-primary-dark: #1d4ed8;
+  --km-secondary: #7c3aed;
+  --km-success: #059669;
+  --km-warning: #d97706;
+  --km-danger: #dc2626;
+
+  --km-background: #f8fafc;
+  --km-surface: #ffffff;
+  --km-text: #172033;
+  --km-muted: #64748b;
+  --km-border: #e2e8f0;
+
+  --km-radius-sm: 10px;
+  --km-radius-md: 16px;
+  --km-radius-lg: 22px;
+
+  --km-shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+  --km-shadow-md: 0 8px 24px rgba(15, 23, 42, 0.07);
+  --km-shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.10);
+}
+
+/* =========================================
+   RESET
+========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  min-width: 320px;
+  scrollbar-gutter: stable;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--km-background);
+  color: var(--km-text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+:focus-visible {
+  outline: 3px solid rgba(59, 130, 246, 0.65);
+  outline-offset: 3px;
+}
+
+::selection {
+  color: #1e3a8a;
+  background: #dbeafe;
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* =========================================
+   COMMON INTERACTIONS
+========================================= */
+
+button,
+a,
+input,
+select,
+textarea {
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+input,
+select,
+textarea {
+  max-width: 100%;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* =========================================
+   REUSABLE CARD EFFECTS
+========================================= */
+
+.km-card {
+  background: var(--km-surface);
+  border: 1px solid var(--km-border);
+  border-radius: var(--km-radius-md);
+  box-shadow: var(--km-shadow-sm);
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    border-color 200ms ease;
+}
+
+.km-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: var(--km-shadow-md);
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   PAGE ANIMATIONS
+========================================= */
+
+@keyframes km-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes km-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes km-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.km-page-enter {
+  animation: km-fade-in 300ms ease both;
+}
+
+.km-modal-enter {
+  animation: km-scale-in 200ms ease both;
+}
+
+.km-slide-enter {
+  animation: km-slide-in 220ms ease both;
+}
+
+/* =========================================
+   TABLE IMPROVEMENTS
+========================================= */
+
+.km-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.km-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.km-table th {
+  color: #64748b;
+  background: #f8fafc;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.km-table th,
+.km-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.km-table tbody tr {
+  transition: background-color 160ms ease;
+}
+
+.km-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* =========================================
+   RESPONSIVE HELPERS
+========================================= */
+
+@media (max-width: 768px) {
+  html {
+    scrollbar-gutter: auto;
+  }
+
+  .km-card:hover {
+    transform: none;
+  }
+
+  .km-table th,
+  .km-table td {
+    padding: 12px;
+    white-space: nowrap;
+  }
+}
+
+/* =========================================
+   REDUCED MOTION ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
