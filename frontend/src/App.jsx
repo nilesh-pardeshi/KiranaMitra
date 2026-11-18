@@ -11,6 +11,7 @@ import Layout from "./components/layout/Layout";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
@@ -26,7 +27,6 @@ const Invoices = lazy(() => import("./pages/Invoices"));
 const Reports = lazy(() => import("./pages/Reports"));
 const Profile = lazy(() => import("./pages/Profile"));
 
-// Page loading fallback
 function PageLoader() {
   return (
     <div className="flex min-h-[50vh] flex-col items-center justify-center gap-4">
@@ -44,31 +44,29 @@ function App() {
       <AuthProvider>
         <Suspense fallback={<PageLoader />}>
           <Routes>
-
             {/* Public routes */}
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
             {/* Protected application routes */}
             <Route element={<ProtectedRoute />}>
-              <Route path="/" element={<Layout />}>
-                <Route index element={<Dashboard />} />
-                <Route path="products" element={<Products />} />
-                <Route path="inventory" element={<Inventory />} />
-                <Route path="suppliers" element={<Suppliers />} />
-                <Route path="purchases" element={<Purchases />} />
-                <Route path="customers" element={<Customers />} />
-                <Route path="sales" element={<Sales />} />
-                <Route path="invoices" element={<Invoices />} />
-                <Route path="reports" element={<Reports />} />
-                <Route path="profile" element={<Profile />} />
-                <Route
-                  path="*"
-                  element={<Navigate to="/" replace />}
-                />
+              <Route element={<Layout />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/inventory" element={<Inventory />} />
+                <Route path="/suppliers" element={<Suppliers />} />
+                <Route path="/purchases" element={<Purchases />} />
+                <Route path="/customers" element={<Customers />} />
+                <Route path="/sales" element={<Sales />} />
+                <Route path="/invoices" element={<Invoices />} />
+                <Route path="/reports" element={<Reports />} />
+                <Route path="/profile" element={<Profile />} />
               </Route>
             </Route>
 
+            {/* Unknown routes */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Suspense>
       </AuthProvider>

@@ -23,6 +23,8 @@ import {
   LoaderCircle,
   History,
   TrendingUp,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 
 import api from "../services/api";
@@ -74,6 +76,7 @@ export default function Customers() {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [ledger, setLedger] = useState(null);
   const [loadingLedger, setLoadingLedger] = useState(false);
+  const [showAllLedgerEntries, setShowAllLedgerEntries] = useState(false);
 
   const [transactionType, setTransactionType] = useState("");
   const [amount, setAmount] = useState("");
@@ -145,6 +148,7 @@ export default function Customers() {
   }
 
   async function openCustomer(customer) {
+    setShowAllLedgerEntries(false);
     setSelectedCustomer(customer);
     setLedger(null);
     setTransactionType("");
@@ -230,7 +234,7 @@ export default function Customers() {
           }
         );
 
-        setSuccess("Udhar transaction recorded successfully.");
+        setSuccess("Credit transaction recorded successfully.");
       } else {
         await api.post(
           `/api/customers/${selectedCustomer.id}/repayments`,
@@ -298,7 +302,7 @@ export default function Customers() {
             </div>
 
             <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
-              Customers & Udhar
+              Customers & Credit
             </h1>
 
             <p className="mt-2 max-w-xl text-sm leading-6 text-emerald-50 sm:text-base">
@@ -409,7 +413,7 @@ export default function Customers() {
             </span>
           </div>
           <p className="mt-5 text-sm font-medium text-gray-500">
-            Customers with Udhar
+            Customers with Outstanding Credit
           </p>
           <h2 className="mt-1 text-3xl font-extrabold text-gray-900">
             {customersWithUdhar}
@@ -453,7 +457,7 @@ export default function Customers() {
               </h2>
             </div>
             <p className="mt-2 text-sm text-gray-500">
-              Select a customer to view their ledger and manage Udhar.
+              Select a customer to view their credit ledger and manage outstanding balances.
             </p>
           </div>
 
@@ -790,7 +794,7 @@ export default function Customers() {
                       <div>
                         <div className="flex items-center gap-2 text-sm font-semibold text-orange-50">
                           <Wallet size={18} />
-                          Outstanding Udhar Balance
+                          Outstanding Balance
                         </div>
                         <h3 className="mt-3 text-3xl font-extrabold sm:text-4xl">
                           {money(ledger.outstanding_balance)}
@@ -820,7 +824,7 @@ export default function Customers() {
                         </div>
                         <div>
                           <p className="font-bold text-gray-900">
-                            Record Udhar
+                            Record Credit Sale
                           </p>
                           <p className="mt-1 text-xs text-gray-500">
                             Add a credit purchase
@@ -886,7 +890,10 @@ export default function Customers() {
                         </thead>
 
                         <tbody className="divide-y divide-gray-100">
-                          {(ledger.entries || []).map((entry) => (
+                          {(showAllLedgerEntries
+                            ? (ledger.entries || [])
+                            : (ledger.entries || []).slice(0, 3)
+                          ).map((entry) => (
                             <tr
                               key={entry.id}
                               className="transition hover:bg-gray-50"
@@ -930,6 +937,27 @@ export default function Customers() {
                         </tbody>
                       </table>
                     </div>
+
+                    {(ledger.entries || []).length > 3 && (
+                      <div className="flex justify-center border-t border-gray-100 bg-gray-50/70 p-3">
+                        <button
+                          type="button"
+                          onClick={() => setShowAllLedgerEntries((current) => !current)}
+                          className="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-bold text-emerald-700 transition hover:bg-emerald-50 hover:text-emerald-800 focus:outline-none focus:ring-4 focus:ring-emerald-100"
+                          aria-expanded={showAllLedgerEntries}
+                        >
+                          {showAllLedgerEntries ? (
+                            <>
+                              Show fewer entries <ChevronUp size={16} />
+                            </>
+                          ) : (
+                            <>
+                              Show all {(ledger.entries || []).length} entries <ChevronDown size={16} />
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    )}
 
                     {(!ledger.entries || ledger.entries.length === 0) && (
                       <div className="px-5 py-12 text-center">

@@ -17,12 +17,12 @@ import {
 } from "lucide-react";
 
 const menuItems = [
-  { name: "Dashboard", path: "/", icon: LayoutDashboard },
+  { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
   { name: "Products", path: "/products", icon: Package },
   { name: "Inventory", path: "/inventory", icon: Boxes },
   { name: "Suppliers", path: "/suppliers", icon: Truck },
   { name: "Purchases", path: "/purchases", icon: ShoppingCart },
-  { name: "Customers & Udhar", path: "/customers", icon: Users },
+  { name: "Customers & Credit", path: "/customers", icon: Users },
   { name: "Sales & Billing", path: "/sales", icon: Receipt },
   { name: "Invoices", path: "/invoices", icon: FileText },
   { name: "Reports", path: "/reports", icon: BarChart3 },
@@ -34,7 +34,7 @@ export default function Sidebar({ open, onClose }) {
   return (
     <aside
       aria-label="Main navigation"
-      className={`fixed inset-y-0 left-0 z-50 flex w-[260px] flex-col border-r border-slate-200/80 bg-white shadow-xl shadow-slate-900/5 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:shadow-none ${
+      className={`fixed inset-y-0 left-0 z-50 flex w-[260px] shrink-0 flex-col border-r border-slate-200/80 bg-white shadow-xl shadow-slate-900/5 transition-transform duration-300 ease-in-out lg:static lg:inset-auto lg:z-auto lg:translate-x-0 lg:shadow-none ${
         open ? "translate-x-0" : "-translate-x-full"
       }`}
     >
@@ -87,7 +87,7 @@ export default function Sidebar({ open, onClose }) {
             <NavLink
               key={path}
               to={path}
-              end={path === "/"}
+              end={path === "/dashboard"}
               onClick={onClose}
               className={({ isActive }) =>
                 `group relative flex items-center gap-3 overflow-hidden rounded-xl px-3.5 py-3 text-[13px] font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
